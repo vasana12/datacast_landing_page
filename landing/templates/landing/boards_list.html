@@ -1,0 +1,163 @@
+{% extends "landing/boards_base.html" %}
+{% block title%}
+    <title>분석 결과보기 탭 추가</title>
+{% endblock %}
+{% block content %}
+{% load static %}
+<style>
+button {
+  background:none;
+  border:0;
+  outline:0;
+  cursor:pointer;
+}
+.tab_menu_container {
+  display:flex;
+    justify-content: center;
+}
+.tab_menu_btn {
+  width:150px;
+  height:40px;
+  transition:0.3s all;
+}
+.tab_menu_btn.on {
+  border-bottom:2px solid #0f192a;
+  font-weight:700;
+  color:#0f192a;
+}
+.tab_menu_btn:hover {
+  color:#0f192a;
+}
+.tab_box {
+  display:none;
+  padding:20px;
+}
+.tab_box.on {
+  display:block;
+}
+.row{
+    justify-content: center;
+}
+.form-control{
+    font-size: 0.8rem;
+}
+.button.analysis-btn{
+    background-color: gainsboro ;
+    border:None;
+    padding : 10px 24px;
+}
+table#analysis_list.dataTable tbody tr:hover {
+  background-color: #EAF2FF;
+}
+
+table#analysis_list.dataTable tbody tr:hover > .sorting_1 {
+  background-color: #EAF2FF;
+}
+#analysis_list, #analysis_list_period{
+    font-size: 0.9rem;
+}
+.history_title{
+    color: #0f192a;
+    text-align: left;
+    font-size: 1.5rem;
+}
+.history{
+    color: darkgray;
+    font-size: 0.8rem;
+    text-align: right;
+}
+</style>
+
+
+
+<div class="tab_wrap">
+    <p class="history IBMPlexSansKR-Text">결과보기><strong>트렌드 분석</strong></p>
+  <p class="history_title nanumsquare bold">트렌드 분석
+  <div class="tab_menu_container">
+    <button class="tab_menu_btn IBMPlexSansKR-Text bold" type="button">단일 분석</button>
+    <button class="tab_menu_btn on IBMPlexSansKR-Text bold" type="button">키워드 비교 분석</button>
+    <button class="tab_menu_btn IBMPlexSansKR-Text bold" type="button">기간 비교 분석</button>
+  </div> <!-- tab_menu_container e -->
+
+  <div class="tab_box_container nanumsquare">
+    <div class="tab_box analysis_solo_result">
+        단일 분석
+    </div>
+
+
+<!-- 키워드 비교 분석===================================================================================================================시작 -->
+    <div class="tab_box on analysis_keyword_result">
+{#        <form id="frm_analysis_result" action="{% url 'landing:analysis_submit' %}" method="post">#}
+
+
+    {% csrf_token %}
+    <table id="analysis_list" class="display IBMPlexSansKR-Text" style="width:100%;" >
+    <thead>
+        <tr>
+            <th>연번</th>
+            <th>키워드A</th>
+            <th>키워드B</th>
+            <th>채널</th>
+            <th>기간</th>
+            <th>진행상태</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for board in object_list %}
+        {% if board.analysis_type == "kca" %}
+{#        <tr style="cursor: pointer"  onclick="location.href='{% url 'landing:boards_detail' board.id %}'">#}
+        <tr id={{ board.id }} data-url="{% url 'landing:boards_detail' board.id %}">
+            <td>{{ forloop.counter}}</td>
+            <td>{{ board.keywordA }}</td>
+            <td>{{ board.keywordB }}</td>
+            <td>{{ board.channel }}</td>
+            <td>{{ board.periodStartA }}~{{ board.periodEndA }}</td>
+            <td class='status'>{{ board.status }}</td>
+        </tr>
+        {% endif %}
+    {% endfor %}
+    </tbody>
+</table>
+{#    <input type="submit" class="btn btn-outline btn-secondary" id="selectBtn" value="분석요청">#}
+{#</form>#}
+    </div>
+<!-- 키워드 비교 분석===================================================================================================================끝 -->
+
+
+
+
+    <div class="tab_box analysis_period_result">
+                <table id="analysis_list_period" class="display IBMPlexSansKR-Text" style="width:100%;" >
+        <thead>
+            <tr>
+                <th>연번</th>
+                <th>기간A</th>
+                <th>기간B</th>
+                <th>키워드</th>
+                <th>채널</th>
+                <th>진행상태</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for board in object_list %}
+                {% if board.analysis_type == "pca" %}
+
+    {#        <tr style="cursor: pointer"  onclick="location.href='{% url 'landing:boards_detail' board.id %}'">#}
+            <tr id={{ board.id }} data-url="{% url 'landing:boards_detail' board.id %}">
+                <td>{{ forloop.counter}}</td>
+                <td>{{ board.periodStartA }} ~ {{ board.periodEndA }}</td>
+                <td>{{ board.periodStartB }} ~ {{ board.periodEndB }}</td>
+                <td>{{ board.keywordA }}</td>
+                <td>{{ board.channel }}</td>
+                <td class='status'>{{ board.status }}</td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+  </div> <!-- tab_box_container e -->
+</div><!-- tab_wrap e -->
+
+
+{% endblock %}

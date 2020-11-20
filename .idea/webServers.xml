@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="5bbc254c-ac60-42d6-9f41-8ea3769e1f42" name="datacast_landing">
+        <fileTransfer rootFolder="/home/ubuntu" accessType="SFTP" host="ec2-13-125-149-45.ap-northeast-2.compute.amazonaws.com" port="22" sshConfigId="66027755-d921-4de8-a08f-e20286bb5aca" sshConfig="ubuntu@ec2-13-125-149-45.ap-northeast-2.compute.amazonaws.com:22 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="b1767496-819e-44b2-ae7f-4f6584ccd6da" name="datacast">
+        <fileTransfer rootFolder="/home/ubuntu" accessType="SFTP" host="ec2-13-125-149-45.ap-northeast-2.compute.amazonaws.com" port="22" sshConfigId="66027755-d921-4de8-a08f-e20286bb5aca" sshConfig="ubuntu@ec2-13-125-149-45.ap-northeast-2.compute.amazonaws.com:22 key" keyPair="true" />
+      </webServer>
+    </option>
+  </component>
+</project>

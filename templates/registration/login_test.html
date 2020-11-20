@@ -1,0 +1,46 @@
+{% extends "landing/base.html" %}
+{%  load widget_tweaks %}
+{% block title %}datacast-login{% endblock %}
+{% block script %}
+{% endblock %}
+
+{% block content %}
+{% endblock %}
+
+
+<div class="row">
+            <div class="col-lg-3">
+
+            </div>
+            <div class="col-md-6 col-lg-6">
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <div class="font-weight-bold">아이디나 패스워드가 잘못됐습니다.</div>
+                    </div>
+                {% endif %}
+
+                <form action="." method="post" class="card pt-4">{% csrf_token %}
+                    <div class="form-group row">
+                        {{ form.username|add_label_class:"col-form-label col-sm-3 ml-5 font-weight-bold" }}
+                        <div class="col-sm-5">
+                            {{ form.username|add_class:"form-control"|attr:"autofocus" }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        {{ form.password|add_label_class:"col-form-label col-sm-3 ml-5 font-weight-bold" }}
+                        <div class="col-sm-5">
+                            {{ form.password|add_class:"form-control" }}
+                        </div>
+                    </div>
+                    <div class = "form-group">
+                        <div class="offset-sm-7 col-sm-5 ml-12">
+                            <input type="submit" value="로그인" class="btn btn-light"/>
+                            <input type="hidden" name="next" value="{{ next }}"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+                  <div class="col-lg-3">
+
+            </div>
+      </div>

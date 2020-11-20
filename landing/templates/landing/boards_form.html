@@ -1,0 +1,351 @@
+{% extends "landing/boards_base.html" %}
+{% load widget_tweaks %}
+{% block title%}
+    <title>듀얼 워드클라우드</title>
+{% endblock %}
+{% block content %}
+{% load static %}
+<style>
+button {
+  background:none;
+  border:0;
+  outline:0;
+  cursor:pointer;
+}
+
+.tab_menu_btn {
+  width:150px;
+  height:40px;
+  transition:0.3s all;
+}
+.tab_menu_btn.on {
+  border-bottom:2px solid #0f192a;
+  font-weight:700;
+  color:#0f192a;
+}
+.tab_menu_btn:hover {
+  color:#0f192a;
+}
+.tab_box {
+  display:none;
+  padding:20px;
+}
+.tab_box.on {
+  display:block;
+}
+.row{
+    justify-content: center;
+}
+.form-control{
+    font-size: 0.8rem;
+}
+.button.analysis-btn{
+    background-color: gainsboro ;
+    border:None;
+    padding : 10px 24px;
+}
+div.info-view{
+
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    font-size: 0.7rem;
+
+}
+div.background_white{
+    width: 30%;
+    background-color: white;
+}
+div.background_blue{
+    border: 1px solid;
+    border-radius: 10px;
+    text-align: left;
+    width: 30%;
+    background-color: #EAF2FF;
+    margin: 15px 0px 0px 0px;
+    padding: 10px;
+}
+.history_title{
+    color: #0f192a;
+    text-align: left;
+    font-size: 1.5rem;
+}
+.history{
+    color: darkgray;
+    font-size: 0.8rem;
+    text-align: right;
+}
+{#.btn-primary,#}
+{#.btn-primary:hover,#}
+{#.btn-primary:active,#}
+{#.btn-primary:visited,#}
+{#.btn-primary:focus {#}
+{#    background-color: #aaaaff;#}
+{#    border-color: #c3defe;#}
+</style>
+<div class="tab_wrap">
+    <p class="history IBMPlexSansKR-Text">분석><strong>트렌드 분석</strong></p>
+  <p class="history_title nanumsquare bold">트렌드 분석
+  <div class="tab_menu_container">
+    <button class="tab_menu_btn IBMPlexSansKR-Text bold" type="button">단일 분석</button>
+    <button class="tab_menu_btn on IBMPlexSansKR-Text bold" type="button">키워드 비교 분석</button>
+    <button class="tab_menu_btn IBMPlexSansKR-Text bold" type="button">기간 비교 분석</button>
+  </div> <!-- tab_menu_container e -->
+
+  <div class="tab_box_container mt-3" style="text-align: center">
+    <div class="tab_box IBMPlexSansKR-Text bold">서비스 준비중입니다.</div>
+
+{#    키워드 비교 form 시작 입니다 ===========================================================================================================================#}
+      <div class="tab_box on nanumsquare">
+{#            {% if form.errors %}#}
+{#            <div class="alert alert-danger">#}
+{#                <div class="font -weight-bold">잘못된 형식입니다. 다시 입력해 주세요</div>#}
+{#                {{ form.errors }}#}
+{#            </div>#}
+{#            {% endif %}#}
+
+
+{#    메세지 form 시작 입니다 ===========================================================================================================================#}
+      {% if messages %}
+        <div class="alert alert-success">
+            {% for m in messages %}
+            {% if message.tags %} class="{{ message.tags }}"{% endif %}{{ m }}
+            {% endfor %}
+        </div>
+           {% else %}
+          <span style="transform: skew(-0.001deg);" class="nanumsquare">두가지 키워드를 입력하고 비교해 보세요.</span>
+          <br>
+          <p>ex)삼성 갤럭시 vs 애플 아이폰</p>
+            {% endif %}
+{#    메시지 form 끝 입니다 ===========================================================================================================================#}
+        <form id='keywordCompareForm' action="{% url "landing:analysis_add" %}" method="post" >
+            {%  csrf_token %}
+            <div class="pt-3">
+            <div class="form-group row">
+                <input type="hidden" name='analysis_type' value="kca">
+                <input type="hidden" name='user' value={{ user.id }}>
+                <div class="col-sm-2">
+                    {% render_field form.keywordA|append_attr:"required:true"|attr:"autofocus" class="form-control" type="text" placeholder="키워드A 입력" %}
+                </div>
+                <div style="display: flex" class="pt-2 ml-2"><h3>vs</h3>
+                </div>
+                <div class="col-sm-2">
+                    {% render_field form.keywordB|append_attr:"required:true" class="form-control" type="text" placeholder="키워드B 입력" %}
+                </div>
+            </div>
+                </div>
+            <div class="form-group row mt-3">
+{#                {{ form.periodStartA|add_label_class:"col-form-label col-sm-2 font-weight-bold" }}#}
+                <div class="col-sm-2">
+                {% render_field form.periodStartA|append_attr:"required:true" class="form-control" type="date" placeholder="수집기간(시작)" %}
+
+                </div>
+                <div style="display: flex" class="pt-2 ml-2"><h3>~</h3>
+                </div>
+                <div class="col-sm-2">
+                {% render_field form.periodEndA|append_attr:"required:true" class="form-control" type="date" placeholder="수집기간(종료)" %}
+
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-2">
+                  <select required style="padding: 10px; font-size:13px; margin-bottom: 10px; border: 1px solid rgb(206, 212, 218); border-radius: 5px;" name="analysis_how" id="analysis_how">
+                        <option value="" disabled selected>분석 종류 선택</option>
+                        <option value="association_analysis">연관어</option>
+                        <option value="sent_association_analysis">감성 연관어</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-1">
+                    {% render_field form.channel|append_attr:"required:true"|attr:'checked' id="btn_radio_naverblog" value='naverblog'  name="channel" type="radio" placeholder="채널" %}
+                   <label class="radio-inline" for="btn_radio_naverblog">blog</label>
+                </div>
+                <div class="col-sm-1">
+                    {% render_field form.channel|append_attr:"required:true" id="btn_radio_navernews" value='navernews' name="channel" type="radio" placeholder="채널" %}
+                   <label class="radio-inline" for="btn_radio_navernews">news</label>
+                </div>
+            </div>
+
+
+
+
+            <div class="form-group row">
+                <div class=" col-sm-5">
+                    <button type="submit" value="분석" class="button analysis-btn IBMPlexSansKR-Text bold"/>분석
+                </div>
+            </div>
+        </form>
+    </div>
+{#    키워드 비교 form 끝입니다 ===========================================================================================================================#}
+
+
+
+{#    기간 비교 분석입니다.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#}
+    <div class="tab_box nanumsquare bold">
+              {% if messages %}
+        <div class="alert alert-success">
+            {% for m in messages %}
+            {% if message.tags %} class="{{ message.tags }}"{% endif %}{{ m }}
+            {% endfor %}
+        </div>
+           {% else %}
+          <div class="nanumsquare normal">기간을 설정하고 비교해 보세요.</div>
+            {% endif %}
+{#    메시지 form 끝 입니다 ===========================================================================================================================#}
+        <form id='periodCompareForm' action="{% url "landing:analysis_add" %}" method="post" >
+            {%  csrf_token %}
+            <div class="pt-3">
+            <div class="form-group row">
+                <input type="hidden" name='analysis_type' value="pca">
+                <input type="hidden" name='user' value={{ user.id }}>
+                <div class="col-sm-4" style="padding: 5px">
+                    {% render_field form.keywordA|append_attr:"required:true"|attr:"autofocus" class="form-control" type="text" placeholder="키워드 입력" %}
+                </div>
+            </div>
+                </div>
+            <div class="form-group row mt-3" style="margin-bottom: 0">
+{#                {{ form.periodStartA|add_label_class:"col-form-label col-sm-2 font-weight-bold" }}#}
+                <div class="col-sm-2">
+                {% render_field form.periodStartA|append_attr:"required:true" class="form-control" type="date" placeholder="수집기간(시작)" %}
+
+                </div>
+                <div style="display: flex" class="pt-2 ml-2"><h3>~</h3>
+                </div>
+                <div class="col-sm-2">
+                {% render_field form.periodEndA|append_attr:"required:true" class="form-control" type="date" placeholder="수집기간(종료)" %}
+
+                </div>
+
+            </div>
+
+            <div class="form-group row" style="margin-bottom: 0">
+{#                {{ form.periodStartA|add_label_class:"col-form-label col-sm-2 font-weight-bold" }}#}
+                <div class="col-sm-2">
+
+                </div>
+                <div style="display: flex" class="ml-2"><h3>vs</h3>
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+
+            </div>
+
+            <div class="form-group row">
+{#                {{ form.periodStartA|add_label_class:"col-form-label col-sm-2 font-weight-bold" }}#}
+                <div class="col-sm-2">
+                {% render_field form.periodStartB|append_attr:"required:true" class="form-control" type="date" placeholder="수집기간(시작)" %}
+
+                </div>
+                <div style="display: flex" class="pt-2 ml-2"><h3>~</h3>
+                </div>
+                <div class="col-sm-2">
+                {% render_field form.periodEndB|append_attr:"required:true" class="form-control" type="date" placeholder="수집기간(종료)" %}
+
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-1">
+                    {% render_field form.channel|append_attr:"required:true"|attr:'checked' id="btn_radio_naverblog" value='naverblog'  name="channel" type="radio" placeholder="채널" %}
+                   <label class="radio-inline" for="btn_radio_naverblog">blog</label>
+                </div>
+                <div class="col-sm-1">
+                    {% render_field form.channel|append_attr:"required:true" id="btn_radio_navernews" value='navernews' name="channel" type="radio" placeholder="채널" %}
+                   <label class="radio-inline" for="btn_radio_navernews">news</label>
+                </div>
+{#                <div class="col-sm-1">#}
+{#                    {% render_field form.channel|append_attr:"required:true" id="btn_radio_instagram" value='instagram' name="channel" type="radio" placeholder="채널" %}#}
+{#                   <label class="radio-inline" for="btn_radio_instagram">Instagram</label>#}
+{#                </div>#}
+{#                <div class="col-sm-1">#}
+{#                    {% render_field form.channel|append_attr:"required:true" id="btn_radio_youtube" value='youtube' name="channel" type="radio" placeholder="채널" %}#}
+{#                   <label class="radio-inline" for="btn_radio_youtube">YouTube</label>#}
+{#                </div>#}
+            </div>
+
+
+            <div class="form-group row">
+                <div class=" col-sm-5">
+                    <button type="submit" value="분석" class="button analysis-btn IBMPlexSansKR-Text bold"/>분석
+                </div>
+            </div>
+        </form>
+{#        <form action="{% url "landing:analysis_add" %}" method="post" class="pt-3">#}
+{#            {%  csrf_token %}#}
+{#            {% if messages %}#}
+{#            <div class="alert alert-success">#}
+{#                {% for m in messages %}#}
+{#                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ m }}</li>#}
+{#                {% endfor %}#}
+{#            </div>#}
+{#            {% endif %}#}
+{#            <div class="pt-3" style="border:2px solid #0f192a;">#}
+{#                ebdb8d#}
+{#            <div class="form-group row mb-0">#}
+{#                <div class="col-sm-2">#}
+{#                    {{form.periodStartA|add_class:"form-control"|attr:"autofocus"|add_class:"pl"}}#}
+{#                </div>#}
+{#                <div style="display: flex" class="pt-2">#}
+{#                    <b>~</b>#}
+{#                </div>#}
+{#                    {{ form.periodEndA|add_label_class:"col-form-label col-sm-2 font-weight-bold" }}#}
+{#                <div class="col-sm-2">#}
+{#                    {{ form.periodEndA|add_class:"form-control"|attr:"autofocus"}}#}
+{#                </div>#}
+{#            </div>#}
+{#            <div style="display:flex; justify-content: center"><h3>vs</h3>#}
+{#            </div>#}
+{#                ebdb8d#}
+{#            <div class="form-group row">#}
+{#                {{ form.periodStartB|add_label_class:"col-form-label col-sm-2 font-weight-bold" }}#}
+{#                <div class="col-sm-2">#}
+{#                    {{ form.periodStartB|add_class:"form-control"|attr:"autofocus"}}#}
+{#                </div>#}
+{#                <div style="display: flex" class="pt-2">#}
+{#                    <b>~</b>#}
+{#                </div>#}
+{#                    {{ form.periodEndB|add_label_class:"col-form-label col-sm-2 font-weight-bold" }}#}
+{#                <div class="col-sm-2">#}
+{#                    {{ form.periodEndB|add_class:"form-control"|attr:"autofocus"}}#}
+{#                </div>#}
+{#            </div>#}
+{#            </div>#}
+{#            <div class="form-group row mt-3">#}
+{#                {{ form.keywordA|add_label_class:"col-form-label col-sm-2 font-weight-bold" }}#}
+{#                <div class="col-sm-5 ">#}
+{#                    {{ form.keywordA|add_class:"form-control"|attr:"autofocus"}}#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="form-group row ">#}
+{#                {{ form.channel|add_label_class:"col-form-label col-sm-2 font-weight-bold" }}#}
+{#                <div class="col-sm-5">#}
+{#                    {{ form.channel|add_class:"form-control"|attr:"autofocus"}}#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="form-group row">#}
+{#                <div class=" col-sm-5">#}
+{#                    <button type="submit" value="분석" class="button button-header bg IBMPlexSansKR-Text bold"/>#}
+{#                </div>#}
+{#            </div>#}
+{#        </form>#}
+    </div>
+    <div class="IBMPlexSansKR-Text info-view">
+      <div class="background_white">
+      </div>
+      <div class="background_blue">
+          <span>▶</span>
+          수집 요청 순서에 따라 순차적으로 처리됩니다.<br>
+                    <span>▶</span>
+     수집 환경에 따라 시간이 5~30분 정도 소요됩니다.<br>
+                    <span style="color: #bd2130">▶
+         수집 결과는 결과보기 메뉴에서 확인하시기 바랍니다.</span>
+      </div>
+      <div class="background_white">
+      </div>
+      </div>
+    </div>
+
+  </div> <!-- tab_box_container e -->
+{% endblock %}

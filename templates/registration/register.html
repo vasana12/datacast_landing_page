@@ -1,0 +1,94 @@
+{% extends "landing/base.html" %}
+{%  load widget_tweaks %}
+{% block title%}
+    회원가입
+{% endblock %}
+{% block content %}
+    {% load static %}
+    <style>
+    input::placeholder { font-size: 12px; }
+    </style>
+<!--================ Hero sm Banner start =================-->
+  <section class="hero-banner hero-banner--sm" style="background-color: #faf9ff">
+    <div class="container">
+      <div class="hero-banner--sm__content">
+        <h1>회원가입</h1>
+      </div>
+    </div>
+  </section>
+ <!--================ Pricing section start =================-->
+
+  <section class="section-margin">
+    <div class="container">
+           {% if messages %}
+                <div class="loginbutton" style="text-align: center" >
+                    {% for m in messages %}
+                    {% if message.tags %} class="{{ message.tags }}"{% endif %}{{ m }}
+                    {% endfor %}
+                   </div>
+            {% endif %}
+        <div class="row" >
+
+                    <div class="col-lg-3">
+                    </div>
+
+                   {% if not messages %}
+
+                    <div class="col-md-6 col-lg-6">
+                   {% if form.errors %}
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger">
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ error|escape }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                        <form action="." method="post" class="card pt-4">{% csrf_token %}
+                            <div class="form-group row">
+                                {{ form.username|add_label_class:"col-form-label col-sm-3 ml-5 font-weight-bold" }}
+                                <div class="col-sm-5" style="font-size: 12px">
+                                    {% render_field form.username class="form-control" attr="autofocus" placeholder="로그인시 사용 아이디" %}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-sm-3 ml-5 font-weight-bold">이름</label>
+                                <div class="col-sm-5">
+                                    {% render_field form.nickname class="form-control" placeholder="성함을 입력해 주세요" %}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                {{ form.password1|add_label_class:"col-form-label col-sm-3 ml-5 font-weight-bold" }}
+                                <div class="col-sm-5">
+                                    {% render_field form.password1 class="form-control" placeholder="패스워드(8자리이상)" %}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                {{ form.password2|add_label_class:"col-form-label col-sm-3 ml-5 font-weight-bold" }}
+                                <div class="col-sm-5">
+                                    {% render_field form.password2 class="form-control" placeholder="패스워드 확인" %}
+                                </div>
+                            </div>
+                            <div class = "form-group">
+                                <div class="" style="text-align: center">
+                                <input style="font-size: 12px; padding:11px" type="submit" value="회원가입" class="btn btn-light"/>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+        {% endif %}
+
+
+            </div>
+    </div>
+  </section>
+  <!--================ Pricing section end =================-->
+
+{% endblock %}

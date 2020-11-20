@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.4/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
+
+      {% load static %}
+    {% block title %}
+    {% endblock %}
+    <link rel="icon" href="{% static "landing/img/logo/symbol_black.png" %}" type="image/png">
+    <link rel="stylesheet" href="{% static "landing/vendors/bootstrap/bootstrap.min.css" %}" type="text/css">
+    <link rel="stylesheet" href="{% static "landing/vendors/fontawesome/css/all.min.css" %}" type="text/css">
+    <link rel="stylesheet" href="{% static "landing/vendors/themify-icons/themify-icons.css" %}" type="text/css">
+    <link rel="stylesheet" href="{% static "landing/vendors/linericon/style.css" %}" type="text/css">
+    <link rel="stylesheet" href="{% static "landing/vendors/owl-carousel/owl.theme.default.min.css" %}" type="text/css">
+    <link rel="stylesheet" href="{% static "landing/vendors/owl-carousel/owl.carousel.min.css" %}" type="text/css">
+    <link rel="stylesheet" href="{%  static "landing/css/style.css" %}">
+    <link rel="stylesheet" href="{%  static "landing/css/font.css" %}">
+    <link rel="stylesheet" href="{%  static "landing/css/custom.css" %}">
+
+</head>
+<body>
+ <!--================Header Menu Area =================-->
+  <header class="header_area fixed-top">
+    <div class="main_menu">
+      <nav class="navbar navbar-expand-lg navbar-light ">
+        <div class="container box_1620">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <a class="navbar-brand logo_h" href="{% url 'landing:index' %}"><img src="{% static "landing/img/logo/symbol&character_white.png" %}" alt="" style="width:140px"></a>
+{#          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">#}
+{#            <span class="icon-bar"></span>#}
+{#            <span class="icon-bar"></span>#}
+{#            <span class="icon-bar"></span>#}
+{#          </button>#}
+          <!-- Collect the nav links, forms, and other content for toggling -->
+            <ul class="nav navbar-nav menu_nav justify-content-end">
+              <li class="nav-item IBMPlexSansKR-Text"><a class="IBMPlexSansKR-Text nav-link" href="{% url 'landing:index' %}">홈</a></li>
+
+                <li class="nav-item submenu dropdown">
+                <a href="#" class="IBMPlexSansKR-Text nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                  aria-expanded="false">분석</a>
+                    {% if user.is_active %}
+                <ul class="dropdown-menu">
+                  <li class="nav-item"><a class="nav-link IBMPlexSansKR-Text" href="{% url 'landing:analysis_add' %}">트렌드분석</a></li>
+                  <li class="nav-item"><a class="nav-link IBMPlexSansKR-Text" href="{% url 'landing:review_search_task_add' %}">리뷰 분석</a></li>
+
+{#                  <li class="nav-item"><a class="nav-link IBMPlexSansKR-Text" href="{% url 'landing:board' %}">비교분석</a></li>#}
+{#                  <li class="nav-item"><a class="nav-link IBMPlexSansKR-Text" href="{% url 'landing:board' %}">분석현황</a></li>#}
+                </ul>
+                        {% else %}
+                <ul class="dropdown-menu">
+                  <li class="nav-item"><a class="nav-link IBMPlexSansKR-Text" href="{% url 'login' %}">트렌드분석</a></li>
+                    <li class="nav-item"><a class="nav-link IBMPlexSansKR-Text" href="{% url 'login' %}">리뷰 분석</a></li>
+{#                  <li class="nav-item"><a class="nav-link IBMPlexSansKR-Text" href="{% url 'login' %}">비교분석</a></li>#}
+{#                  <li class="nav-item"><a class="nav-link IBMPlexSansKR-Text" href="{% url 'login' %}">분석현황</a></li>#}
+                </ul>
+               {% endif %}
+                </li>
+
+              <li class="nav-item submenu dropdown"><a class="IBMPlexSansKR-Text nav-link" href="{% url 'landing:boards_list' %}">결과보기</a>
+                <ul class="dropdown-menu">
+                  <li class="nav-item"><a class="nav-link IBMPlexSansKR-Text" href="{% url 'landing:boards_list' %}">트렌즈분석</a></li>
+                  <li class="nav-item"><a class="nav-link IBMPlexSansKR-Text" href="#">리뷰분석</a></li>
+{#                  <li class="nav-item"><a class="nav-link" href="{% url 'landing:blog_details' %}">Blog Details</a></li>#}
+                </ul>
+
+                <li class="nav-item submenu dropdown">
+                <a href="#" class="IBMPlexSansKR-Text nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                  aria-expanded="false">블로그</a>
+                <ul class="dropdown-menu">
+                  <li class="nav-item"><a class="nav-link" href="https://velog.io/@kjyggg">Blog</a></li>
+{#                  <li class="nav-item"><a class="nav-link" href="{% url 'landing:blog_details' %}">Blog Details</a></li>#}
+                </ul>
+            </li>
+              <li class="nav-item"><a class="IBMPlexSansKR-Text nav-link" href="{% url 'landing:contact' %}">문의하기</a></li>
+            {% if user.is_active %}
+                <li class="nav-item submenu dropdown">
+              <a href="#" class="IBMPlexSansKR-Text nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-user" style="color: white"></i>&ensp;
+                    <span class="IBMPlexSansKR-Text bold" style="color: white">{% firstof user.nickname %}<span style="font-size: 12px">&ensp;님</span></span>
+                    <i style="color: white" class="fas fa-caret-down"></i>
+              </a>
+                <ul class="dropdown-menu">
+                  <li class="nav-item"><a class="nav-link IBMPlexSansKR-Text" href="{% url 'logout' %}">로그아웃</a></li>
+                </ul>
+
+              </li>
+            {% else %}
+                <li class="nav-item submenu dropdown">
+              <a href="#" class="IBMPlexSansKR-Text nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-user" style="color: white"></i>&ensp;
+                    <span class="IBMPlexSansKR-Text bold" style="color: white">{% firstof user.nickname %}<span style="font-size: 14px">내계정</span></span>
+                    <i style="color: white" class="fas fa-caret-down"></i>
+              </a>
+                <ul class="dropdown-menu">
+                  <li class="nav-item"><a class="nav-link IBMPlexSansKR-Text" href="{% url 'login' %}">로그인</a></li>
+                  <li class="nav-item"><a class="nav-link IBMPlexSansKR-Text" href="{% url 'register' %}">회원가입</a></li>
+
+                </ul>
+
+              </li>
+            {% endif %}
+            </ul>
+
+{#            <ul class="navbar-right">#}
+{#              <li class="nav-item">#}
+{#                  {% if user.is_active %}#}
+{#                <button class="button button-header bg IBMPlexSansKR-Text bold" onclick="location.href=#}
+{#                '{% url 'logout' %}'">로그아웃</button>#}
+{#                  {% else %}#}
+{#                  <button class="button button-header bg IBMPlexSansKR-Text bold" onclick="location.href=#}
+{#                '{% url 'login' %}'">로그인</button>#}
+{#                  {% endif %}#}
+{#              </li>#}
+{#            </ul>#}
+          </div>
+      </nav>
+    </div>
+  </header>
+
+    <section class="main_section">
+        <div class="container mt-2" style="text-align: center">
+<!--================ main content =================-->
+{% block content %}
+{% endblock %}
+    <!--================ main content end =================-->
+
+    </div>
+    </section>
+</body>
+  <link rel="stylesheet" href="{% static "landing/vendors/owl-carousel/owl.carousel.min.css" %}" type="text/css">
+{% comment %}button to export file{% endcomment %}
+
+ <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+ <script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+ <script type="text/javascript" src="https://cdn.datatables.net/colreorder/1.5.2/js/dataTables.colReorder.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+{#<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script>#}
+<script type="text/javascript" src="{% static "landing/js/buttons.html5.js" %}"></script>
+
+
+{% comment %}button to export file{% endcomment %}
+<script type="text/javascript" src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="{%  static "landing/js/tab_menu.js" %}"></script>
+  <script type="text/javascript" src="{%  static "landing/js/dataTables_analysis_list.js" %}"></script>
+  <script type="text/javascript" src="{%  static "landing/js/dataTables_review_product_list.js" %}"></script>
+
+  <script type="text/javascript" src="{%  static "landing/js/dataTables_keyword_list.js" %}"></script>
+<script type="text/javascript" src="{%  static "landing/vendors/bootstrap/bootstrap.bundle.min.js" %}"></script>
+  <script type="text/javascript" src="{%  static "landing/vendors/owl-carousel/owl.carousel.min.js" %}"></script>
+  <script type="text/javascript" src="{%  static "landing/js/jquery.ajaxchimp.min.js" %}"></script>
+  <script type="text/javascript" src="{%  static "landing/js/mail-script.js" %}"></script>
+{#  <script type="text/javascript" src="{%  static "landing/js/main.js" %}"></script>#}
+</html>

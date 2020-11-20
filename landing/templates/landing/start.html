@@ -1,0 +1,63 @@
+{% extends "landing/base.html" %}
+{% block title%}
+    Datacast-contact
+{% endblock %}
+{% block content %}
+    {% load static %}
+  <!--================ Hero sm Banner start =================-->
+
+  <!--================ Hero sm Banner end =================-->
+
+
+  <!-- ================ contact section start ================= -->
+  <section class="section-margin">
+    <div class="container">
+      <div class="d-none d-sm-block mb-3 pb-4">
+        <div id="map" style="height: 150px;"></div>
+
+      </div>
+
+      <div class="row text-center">
+        <div class="col-md-4 col-lg-2 mb-4 mb-md-0">
+
+        </div>
+        <div class="col-md-8 col-lg-8 IBMPlexSansKR-Text">
+                <b>{% if user.is_active %}
+                {% firstof user.get_short_name user.get_username %}님 &ensp;안녕하세요
+                 </b><br><br>
+                    <form>
+                <label class="IBMPlexSansKR-Text bold" for="project-select"></label>
+                <select name="pets" id="project-select">
+                    <option value="" class="IBMPlexSansKR-Text bold">choose your project</option>
+                    <option value="dog">NH</option>
+                    <option value="cat">UNIX</option>
+                    <option value="hamster">SAMSUNG</option>
+                </select>
+                    <div>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <button class="button IBMPlexSansKR-Text bold">
+                            gogo
+                        </button>
+                    </div>
+                    </form>
+{#                <br><button class="button IBMPlexSansKR-Text bold" onclick="location.href=#}
+{#                '{% url 'login' %}'">내 프로젝트 확인하기</button>#}
+{##}
+{#                <button class="button IBMPlexSansKR-Text bold" onclick="location.href=#}
+{#                '{% url 'login' %}'">새 프로젝트 생성+</button>#}
+                {% endif %}
+        </div>
+              <div class="col-md-4 col-lg-2 mb-4 mb-md-0">
+
+        </div>
+      </div>
+           <div id="map" style="height: 250px;"></div>
+
+      </div>
+    </div>
+  </section>
+	<!-- ================ contact section end ================= -->
+{% endblock %}

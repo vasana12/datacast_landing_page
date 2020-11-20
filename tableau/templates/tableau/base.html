@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<HTML LANG="KO">
+<HEAD>
+	<TITLE>{% block title %} AWS / Django Web Application{% endblock %}</TITLE>
+    <meta charset="UTF-8">
+	{% load static %}<SCRIPT src="{% static 'tableau/vendors/jquery/jquery-3.2.1.min.js' %}" ></SCRIPT>
+	{% block script %}{% endblock %}
+</HEAD>
+<BODY>
+	<DIV ID="header">
+		<DIV CLASS="logo" >
+			<DIV CLASS="row">
+				<DIV CLASS="col-4 center member-link dark-link">
+				{% if user.username %}
+                    {user.username}
+				<A href="{% url 'password_change' %}">{{ user.last_name }} 님</A> /
+				<A href="{% url 'tableau:logout' %}">로그아웃</A>
+				{% else %}
+				<A href="{% url 'tableau:login' %}">로그인</A> /
+				{% endif %}
+				</DIV>
+			</DIV>
+		</DIV>
+		<DIV CLASS="menu">
+			<DIV CLASS="row">
+				<DIV CLASS="col-2 center sideline dark-link"><A href="#">HOME</A></DIV>
+				<DIV CLASS="col-2 center sideline dark-link"><A href="#">소개</A></DIV>
+				<DIV CLASS="col-2 center sideline dark-link"><A href="#">공지사항</A></DIV>
+				<DIV CLASS="col-2 center sideline dark-link"><A href="#">자유 게시판</A></DIV>
+				<DIV CLASS="col-2 center sideline dark-link"><A href="#">대화형 게시판</A></DIV>
+				<DIV CLASS="col-2 center sideline">&nbsp;</DIV>
+			</DIV>
+		</DIV>
+	</DIV>
+	<DIV ID="container">
+		{% block content %}{% endblock %}
+	</DIV>
+	<DIV ID="footer">
+		<DIV ID="row">
+			<DIV CLASS="col-12 center">Copyright by Digitalbooks / <A href="mailto:onikaze.books@gmail.com">Contact Us</A></DIV>
+		</DIV>
+	</DIV>
+</BODY>
+</HTML>

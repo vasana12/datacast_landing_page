@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="google-site-verification" content="3oIQPuJ5uK-z4kYOaFeR439EDxoEZDnJOi6N9osauMc" />
+  <meta name="description" content="소셜상의 데이터를 수집하고 분석해보세요">
+    <meta property="og:title" content="데이터 캐스트. DATA CAST">
+    <meta property="og:description" content="소셜상의 데이터를 수집하고 분석해보세요">
+    <meta property="og:locale" content="ko_KR">
+    <meta property="og:image" content="https://storage.googleapis.com/wordcloud_ap/shortcut_datacast.png">
+    <meta property="og:url" content="http://datacast.kr/"/>
+    <meta property="og:site_name" content="DATACAST"/>
+    <meta property="og:type" content="website"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css">
+      {% load static %}
+    <title>DATACAST</title>
+
+    {# 홈페이지 short-cut icon     #}
+    <link rel="stylesheet" href="{%  static "landing/css/icofont.min.css" %}">
+    <link rel="icon" href="{% static "landing/img/logo/symbol_black.png" %}" type="image/png">
+    <link rel="stylesheet" href="{% static "landing/vendors/bootstrap/bootstrap.min.css" %}" type="text/css">
+    <link rel="stylesheet" href="{% static "landing/vendors/fontawesome/css/all.min.css" %}" type="text/css">
+    <link rel="stylesheet" href="{% static "landing/vendors/themify-icons/themify-icons.css" %}" type="text/css">
+    <link rel="stylesheet" href="{% static "landing/vendors/linericon/style.css" %}" type="text/css">
+    <link rel="stylesheet" href="{% static "landing/vendors/owl-carousel/owl.theme.default.min.css" %}" type="text/css">
+    <link rel="stylesheet" href="{% static "landing/vendors/owl-carousel/owl.carousel.min.css" %}" type="text/css">
+    <link rel="stylesheet" href="{%  static "landing/css/style.css" %}">
+    <link rel="stylesheet" href="{%  static "landing/css/font.css" %}">
+
+</head>
+
+<body>
+  <!--================Header Menu Area =================-->
+  <header class="header_area">
+    <div class="main_menu">
+      <nav class="navbar navbar-expand-lg navbar-light" style="background: #0c072d;">
+        <div class="container box_1620">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <a class="navbar-brand logo_h" href="{% url 'landing:index' %}"><img src="{% static "landing/img/logo/symbol&character_white.png" %}" alt="" style="width: 140px"></a>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+            <ul class="nav navbar-nav menu_nav justify-content-end">
+              <li class="nav-item IBMPlexSansKR-Text"><a class="IBMPlexSansKR-Text nav-link" href="{% url 'landing:index' %}">홈</a></li>
+                <li class="nav-item submenu dropdown">
+                <a href="#" class="IBMPlexSansKR-Text nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                  aria-expanded="false">분석</a>
+                    {% if user.is_active %}
+                <ul class="dropdown-menu">
+                  <li class="nav-item"><a class="nav-link IBMPlexSansKR-Text" href="{% url 'landing:analysis_add' %}">트렌즈분석</a></li>
+                  <li class="nav-item"><a class="nav-link IBMPlexSansKR-Text" href="{% url 'landing:review_search_task_add' %}">리뷰분석</a></li>
+{#                  <li class="nav-item"><a class="nav-link IBMPlexSansKR-Text" href="{% url 'landing:board' %}">분석현황</a></li>#}
+                </ul>
+                        {% else %}
+                <ul class="dropdown-menu">
+                  <li class="nav-item"><a class="nav-link IBMPlexSansKR-Text" href="{% url 'landing:analysis_add' %}">트렌즈분석</a></li>
+                  <li class="nav-item"><a class="nav-link IBMPlexSansKR-Text" href="{% url 'landing:review_search_task_add' %}">리뷰분석</a></li>
+{#                  <li class="nav-item"><a class="nav-link IBMPlexSansKR-Text" href="{% url 'login' %}">분석현황</a></li>#}
+                </ul>
+               {% endif %}
+                </li>
+
+                <li class="nav-item submenu dropdown"><a class="IBMPlexSansKR-Text nav-link" href="{% url 'landing:boards_list' %}">결과보기</a>
+                                <ul class="dropdown-menu">
+                  <li class="nav-item"><a class="nav-link IBMPlexSansKR-Text" href="{% url 'landing:boards_list' %}">트렌즈분석</a></li>
+                  <li class="nav-item"><a class="nav-link IBMPlexSansKR-Text" href="{% url 'landing:boards_list' %}">리뷰분석</a></li>
+                                </ul>
+                </li>
+                <li class="nav-item submenu dropdown">
+                <a href="#" class="IBMPlexSansKR-Text nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                  aria-expanded="false">블로그</a>
+                <ul class="dropdown-menu">
+                  <li class="nav-item"><a class="nav-link" href="https://velog.io/@kjyggg">Blog</a></li>
+                </ul>
+                </li>
+              <li class="nav-item"><a class="IBMPlexSansKR-Text nav-link" href="{% url 'landing:contact' %}">문의하기</a></li>
+            {% if user.is_active %}
+                <li class="nav-item submenu dropdown">
+              <a href="#" class="IBMPlexSansKR-Text nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-user" style="color: white"></i>&ensp;
+                    <span class="IBMPlexSansKR-Text bold" style="color: white">{% firstof user.nickname %}<span style="font-size: 12px">&ensp;님</span></span>
+                    <i style="color: white" class="fas fa-caret-down"></i>
+              </a>
+                <ul class="dropdown-menu">
+                  <li class="nav-item"><a class="nav-link IBMPlexSansKR-Text" href="{% url 'logout' %}">로그아웃</a></li>
+                </ul>
+
+              </li>
+            {% else %}
+                <li class="nav-item submenu dropdown">
+              <a href="#" class="IBMPlexSansKR-Text nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-user" style="color: white"></i>&ensp;
+                    <span class="IBMPlexSansKR-Text bold" style="color: white">{% firstof user.nickname %}<span style="font-size: 14px">내계정</span></span>
+                    <i style="color: white" class="fas fa-caret-down"></i>
+              </a>
+                <ul class="dropdown-menu">
+                  <li class="nav-item"><a class="nav-link IBMPlexSansKR-Text" href="{% url 'login' %}">로그인</a></li>
+                  <li class="nav-item"><a class="nav-link IBMPlexSansKR-Text" href="{% url 'register' %}">회원가입</a></li>
+
+                </ul>
+
+              </li>
+            {% endif %}
+
+            </ul>
+
+{#            <ul class="navbar-right">#}
+{#              <li class="nav-item submenu dropdown">#}
+{#                  {% if user.is_active %}#}
+{#                  <i class="fas fa-user" style="color: white"></i>&ensp;#}
+{#                <span class="IBMPlexSansKR-Text bold" style="color: white">{% firstof user.nickname %} </span>#}
+{#                <i style="color: white" class="fas fa-caret-down"></i>#}
+{##}
+{#                <button class="button button-header bg IBMPlexSansKR-Text bold" onclick="location.href=#}
+{#                '{% url 'logout' %}'">로그아웃</button>#}
+{#                  {% else %}#}
+{#                  <button class="button button-header button-login bg IBMPlexSansKR-Text bold" onclick="location.href=#}
+{#                '{% url 'login' %}'">로그인</button>#}
+{#                  {% endif %}#}
+{#              </li>#}
+{#            </ul>#}
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <!--================Header Menu Area =================-->
+
+  {% block content %}
+{% endblock %}
+  <!-- ================ start footer Area ================= -->
+  <footer class="footer-area section-gap IBMPlexSansKR-Text bold">
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-2 col-sm-6 mb-4 mb-xl-0 single-footer-widget">
+					<a href="{% url "landing:index" %}"><h4>홈</h4></a>
+				</div>
+				<div class="col-xl-2 col-sm-6 mb-4 mb-xl-0 single-footer-widget">
+					<h4>분석</h4>
+					<ul>
+						<li><a href="{% url "landing:analysis_add" %}">트렌드분석</a></li>
+						<li><a href="{% url "landing:review_search_task_add" %}">리뷰분석</a></li>
+
+					</ul>
+				</div>
+				<div class="col-xl-2 col-sm-6 mb-4 mb-xl-0 single-footer-widget">
+					<a href="{% url "landing:boards_list" %}"><h4>결과보기</h4></a>
+				</div>
+				<div class="col-xl-2 col-sm-6 mb-4 mb-xl-0 single-footer-widget">
+					<a href="{% url "landing:contact" %}"><h4>문의하기</h4></a>
+					<ul>
+					</ul>
+				</div>
+				<div class="col-xl-4 col-md-8 mb-4 mb-xl-0 single-footer-widget">
+					<a href="{% url 'login' %}"><h4>로그인</h4></a>
+{#					<div class="form-wrap" id="mc_embed_signup">#}
+{#						<form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"#}
+{#						 method="get" class="form-inline">#}
+{#							<input class="form-control" name="EMAIL" placeholder="Your Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Email Address '"#}
+{#							 required="" type="email">#}
+{#							<button class="click-btn btn btn-default">subscribe</button>#}
+{#							<div style="position: absolute; left: -5000px;">#}
+{#								<input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">#}
+{#							</div>#}
+{##}
+{#							<div class="info"></div>#}
+{#						</form>#}
+{#					</div>#}
+				</div>
+			</div>
+			<div class="footer-bottom row align-items-center text-center text-lg-left">
+				<p class="footer-text m-0 col-lg-8 col-md-12"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+{% comment %}
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">DATACAST</a>
+{% endcomment %}
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+				<div class="col-lg-4 col-md-12 text-center text-lg-right footer-social">
+                    <strong> ⓒ  DATACAST All Rights Reserved.</strong><p></p>
+</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+  <!-- ================ End footer Area ================= -->
+  <link rel="stylesheet" href="{% static "landing/vendors/owl-carousel/owl.carousel.min.css" %}" type="text/css">
+  <script type="text/javascript" src="{%  static "landing/vendors/jquery/jquery-3.2.1.min.js" %}"></script>
+  <script type="text/javascript" src="{%  static "landing/vendors/bootstrap/bootstrap.bundle.min.js" %}"></script>
+  <script type="text/javascript" src="{%  static "landing/vendors/owl-carousel/owl.carousel.min.js" %}"></script>
+  <script type="text/javascript" src="{%  static "landing/js/jquery.ajaxchimp.min.js" %}"></script>
+  <script type="text/javascript" src="{%  static "landing/js/mail-script.js" %}"></script>
+  <script type="text/javascript" src="{%  static "landing/js/main.js" %}"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+{% extends "landing/base.html" %}
+{% block title%}
+    Datacast-contact
+{% endblock %}
+{% block content %}
+    {% load static %}
+  <!--================ Hero sm Banner start =================-->
+
+  <!--================ Hero sm Banner end =================-->
+
+
+  <!-- ================ contact section start ================= -->
+  <section class="section-margin">
+    <div class="container">
+      <div class="d-none d-sm-block mb-5 pb-4">
+        <div id="map" style="height: 150px;"></div>
+
+      </div>
+
+      <div class="row text-center">
+        <div class="col-md-4 col-lg-4 mb-4 mb-md-0">
+
+        </div>
+        <div class="col-md-8 col-lg-4 IBMPlexSansKR-Text">
+                <b>{% if user.is_active %}
+                {% firstof user.get_short_name user.get_username %}님 &ensp;안녕하세요
+                 </b>
+                {% endif %}
+        </div>
+              <div class="col-md-4 col-lg-4 mb-4 mb-md-0">
+
+        </div>
+      </div>
+           <div id="map" style="height: 250px;"></div>
+
+      </div>
+    </div>
+  </section>
+	<!-- ================ contact section end ================= -->
+{% endblock %}

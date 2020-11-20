@@ -1,0 +1,251 @@
+{% extends "landing/boards_base.html" %}
+{% load widget_tweaks %}
+{% block title%}
+    <title>상품리뷰 분석</title>
+{% endblock %}
+{% block content %}
+{% load static %}
+<style>
+button {
+  background:none;
+  border:0;
+  outline:0;
+  cursor:pointer;
+}
+.tab_menu_container {
+  display:flex;
+    justify-content: center;
+}
+.tab_menu_btn {
+  width:150px;
+  height:40px;
+  transition:0.3s all;
+}
+.tab_menu_btn.on {
+  border-bottom:2px solid #0f192a;
+  font-weight:700;
+  color:#0f192a;
+}
+.tab_menu_btn:hover {
+  color:#0f192a;
+}
+.tab_box {
+  display:none;
+  padding:20px;
+}
+.tab_box.on {
+  display:block;
+}
+.row{
+    justify-content: center;
+}
+.form-control{
+    font-size: 0.8rem;
+}
+.button.analysis-btn{
+    background-color: gainsboro ;
+    border:None;
+    padding : 10px 24px;
+    color: black;
+}
+div.info-view{
+
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    font-size: 0.7rem;
+
+}
+div.background_white{
+    width: 30%;
+    background-color: white;
+}
+div.background_blue{
+    border: 1px solid;
+    border-radius: 10px;
+    text-align: left;
+    width: 30%;
+    background-color: #EAF2FF;
+    margin: 15px 0px 0px 0px;
+    padding: 10px;
+}
+.history_title{
+    color: #0f192a;
+    text-align: left;
+    font-size: 1.5rem;
+}
+.history{
+    color : darkgray;
+    font-size: 0.8rem;
+    text-align: right;
+}
+.dataTables_wrapper .dt-buttons{
+    float: right;
+    margin-top: 5px;
+}
+{#.btn-primary,#}
+{#.btn-primary:hover,#}
+{#.btn-primary:active,#}
+{#.btn-primary:visited,#}
+{#.btn-primary:focus {#}
+{#    background-color: #aaaaff;#}
+{#    border-color: #c3defe;#}
+img.review_list_thumnail{
+   height: auto;
+    width: 100%;
+}
+table.dataTable tbody td.select-checkbox {
+  position: relative;
+}
+table.dataTable tbody td.select-checkbox:before,
+table.dataTable tbody td.select-checkbox:after{
+  display: block;
+  position: absolute;
+  left: 50%;
+    top : 50%;
+  width: 12px;
+  height: 12px;
+  box-sizing: border-box;
+}
+table.dataTable tbody td.select-checkbox:before{
+  content: ' ';
+  margin-top: -6px;
+  margin-left: -6px;
+  border: 2px solid #cccccc;
+  border-radius: 3px;
+}
+
+table.dataTable tbody tr.selected {
+    color: black !important;
+    background-color: #EAF2FF !important;
+    transition: all .4s ease;
+}
+.events {
+        margin-bottom: 1em;
+        padding: 1em;
+        background-color: #f6f6f6;
+        border: 1px solid #999;
+        border-radius: 3px;
+        height: 100px;
+        overflow: auto;
+    }
+</style>
+
+
+<div class="tab_wrap">
+    <p class="history IBMPlexSansKR-Text">분석><strong>리뷰 분석</strong></p>
+  <p class="history_title nanumsquare bold">리뷰 분석
+
+
+  <div class="tab_box_container mt-3" style="text-align: center;">
+{#    키워드 비교 form 시작 입니다 ===========================================================================================================================#}
+      <div class="tab_box on nanumsquare">
+{#            {% if form.errors %}#}
+{#            <div class="alert alert-danger">#}
+{#                <div class="font -weight-bold">잘못된 형식입니다. 다시 입력해 주세요</div>#}
+{#                {{ form.errors }}#}
+{#            </div>#}
+{#            {% endif %}#}
+
+
+{#    메세지 form 시작 입니다 ===========================================================================================================================#}
+
+          {% if is_searched == 1 %}
+              <div class="IBMPlexSansKR-Text info-view">
+      <div class="background_white">
+      </div>
+      <div class="background_blue">
+          <span>▶</span>
+          제품을 선택하면 해당제품 review 분석을 시작합니다.<br>
+                    <span>▶</span>
+     수집 환경에 따라 시간이 5~30분 정도 소요됩니다.<br>
+                    <span style="color: #bd2130">▶
+         수집 결과는 결과보기 메뉴에서 확인하시기 바랍니다.</span>
+      </div>
+      <div class="background_white">
+      </div>
+      </div>
+{#        <div class="alert" style="background-color: #EAF2FF; font-size: 12px">#}
+{#            {% for m in messages %}#}
+{#            {% if message.tags %} class="{{ message.tags }}"{% endif %}{{ m }}#}
+{#            {% endfor %}#}
+{#        </div>#}
+           {% else %}
+          <span >관심 제품 카테고리를 입력해보세요</span>
+          <br>
+          <p>제품 카테고리를 검색하면 관련제품 리스트가 출력됩니다.</p>
+            {% endif %}
+{#    메시지 form 끝 입니다 ===========================================================================================================================#}
+        <form id='reivewAnalysisForm' action="{% url "landing:review_search_task_add" %}" method="post">
+            {%  csrf_token %}
+            <div class="pt-3">
+            <div class="form-group row">
+                <input type="hidden" name='user' value={{ user.id }}>
+                <div class="col-sm-2">
+                    {% render_field form.search_keyword|append_attr:"required:true"|attr:"autofocus" class="form-control" type="text" placeholder="키워드 입력" %}
+                </div>
+            <button type="submit" value="분석" class="IBMPlexSansKR-Text bold"/><i class="fas fa-search"></i>
+            </div>
+                </div>
+            <div class="form-group row">
+                <div class=" col-sm-5">
+                </div>
+            </div>
+        </form>
+    </div>
+
+{#  selected_row event 처리  #}
+
+{#    <button type="button" id="chk_ok_btn" class="nanumsquare" style="font-size: 12px">체크 확인</button>#}
+
+    <div style="margin-bottom: 10%">
+
+<form id="reviewRequestCreateForm" action="{% url 'landing:datacast_request_create' %}" method="post" data-url="{% url 'landing:boards_list' %}">
+    {%  csrf_token %}
+    <table id="reivew_product_list" class="IBMPlexSansKR-Text compact row-border " style="width:100%;"  >
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th>RANK</th>
+            <th>검색키워드</th>
+            <th>카테고리</th>
+            <th>제품이름</th>
+            <th>브랜드</th>
+            <th>가격</th>
+            <th style="display: none"></th>
+            <th style="display: none"></th>
+            <th style="display: none"></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for product in product_list %}
+{#        <tr style="cursor: pointer"  onclick="location.href='{% url 'landing:boards_detail' board.id %}'">#}
+{#        <tr id={{ product.id }} data-url="{% url 'landing:boards_detail' board.id %}">#}
+        <tr class="nanumsquare" style="font-size: 14px" itemid={{ product.id }}>
+            <td></td>
+            <td><a href="{{ product.link }}" target="_blank"><img class="review_list_thumnail" alt="{{ product.title }}" src="{{ product.image }}"></a></td>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ product.search_keyword }}</td>
+            <td class='status'>{{ product.category1 }}</td>
+            <td>{{ product.title }}</td>
+            <td>{{ product.brand }}</td>
+            <td>{{ product.lprice }}</td>
+            <th style="display: none">{{ product.id }}</th>
+            <th style="display: none">{{ product.productId }}</th>
+            <th style="display: none">{{ product.link }}</th>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{#                <button class="button button-header bg IBMPlexSansKR-Text bold" onclick="location.href=#}
+
+        <button type="submit" id="reviewRequestCreateForm_btn" class="analysis-btn button IBMPlexSansKR-Text bold" style="background-color: gainsboro;">분석</button>
+</form>
+{#    키워드 비교 form 끝입니다 ===========================================================================================================================#}
+
+
+    </div>
+
+  </div> <!-- tab_box_container e -->
+{% endblock %}

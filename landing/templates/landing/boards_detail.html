@@ -1,0 +1,268 @@
+{% extends "landing/boards_base.html" %}
+{% block title%}
+    <title>분석 결과보기 탭 추가</title>
+{% endblock %}
+{% block content %}
+{% load static %}
+<style>
+button {
+  background:none;
+  border:0;
+  outline:0;
+  cursor:pointer;
+}
+.tab_menu_container {
+  display:flex;
+    justify-content: center;
+}
+.tab_menu_btn {
+  width:150px;
+  height:40px;
+  transition:0.3s all;
+}
+.tab_menu_btn.on {
+  border-bottom:2px solid #0f192a;
+  font-weight:700;
+  color:#0f192a;
+}
+.tab_menu_btn:hover {
+  color:#0f192a;
+}
+.tab_box {
+  display:none;
+  padding:20px;
+}
+.tab_box.on {
+  display:block;
+}
+.row{
+    justify-content: center;
+}
+.form-control{
+    font-size: 0.8rem;
+}
+.button.analysis-btn{
+    background-color: gainsboro ;
+    border:None;
+    padding : 10px 24px;
+}
+img.wordcloud{
+    width: 50vw;
+}
+div.wordcloud_container {
+    border-top: 1px solid gainsboro;
+}
+.history_title{
+    color: #0f192a;
+    text-align: left;
+    font-size: 1.5rem;
+}
+.history{
+    color: darkgray;
+    font-size: 0.8rem;
+    text-align: right;
+}
+.wordcloud_title{
+    padding-top: 40px;
+    text-align: left;
+}
+.dataTables_wrapper .dataTables_filter input{
+    margin-top: 20px;
+}
+.dataTables_wrapper{
+    border-top:1px solid gainsboro;
+}
+.dataTables_wrapper .dt-buttons{
+    float:none;
+    margin-top: 5px;
+    text-align: right;
+}
+div.analysis_title{
+    text-align: left;
+}
+div.analysis_container{
+    border-top: 1px solid gainsboro;
+}
+.analysis_info_table{
+    width: 100%;
+    border-top: 1px solid #333333;
+}
+.analysis_container .analysis_info_table th{
+    text-align: center;
+    border-bottom : 1px solid #e0e0e0;
+    border-right : 1px solid #f1f1f1;
+    padding : 13px 15px 11px 15px;
+    font-size: 13px;
+    background: #f3f3f3
+}
+.analysis_container .analysis_info_table td {
+    padding: 6px 8px;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 13px;
+    background: #ffffff;
+    color: #737373;
+    line-height: 23px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+</style>
+
+    <p class="history IBMPlexSansKR-Text">결과보기><strong>트렌드 분석</strong></p>
+  <p class="history_title nanumsquare bold">트렌드 분석
+    <div class="analysis_title">>분석정보
+        <div class="analysis_container">
+                {% if board.analysis_type == "pca" %}
+
+            <table class="analysis_info_table">
+                <colgroup>
+                    <col style="width: 16%">
+
+                    <col style="width: 16%">
+
+                    <col style="width: 16%">
+
+                    <col style="width: 16%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th scope="row" colspan="2" class="center">{{ board.periodStartA }}~{{ board.periodEndA }}</th>
+                        <th scope="row" colspan="2" class="center">{{ board.periodStartB }}~{{ board.periodEndB }}</th>
+
+                    </tr>
+                    <tr>
+                        <th scope="row" class="center">수집키워드</th>
+                        <th scope="row" class="center">채널</th>
+                        <th scope="row" class="center">수집키워드</th>
+                        <th scope="row" class="center">채널</th>
+                    </tr>
+                <tbody>
+                    <tr>
+                        <td scope="row" class="center">{{ board.keywordA }}</td>
+                        <td scope="row" class="center">{{ board.channel }}</td>
+                        <td scope="row" class="center">{{ board.keywordA }}</td>
+                        <td scope="row" class="center">{{ board.channel}}</td>
+                    </tr>
+                </tbody>
+                </thead>
+            </table>
+            {% endif %}
+
+        {% if board.analysis_type == "kca" %}
+
+            <table class="analysis_info_table">
+                <colgroup>
+                    <col style="width: 16%">
+
+                    <col style="width: 16%">
+
+                    <col style="width: 16%">
+
+                    <col style="width: 16%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th scope="row" colspan="2" class="center">{{ board.keywordA }}</th>
+                        <th scope="row" colspan="2" class="center">{{ board.keywordB }}</th>
+
+                    </tr>
+                    <tr>
+                        <th scope="row" class="center">수집채널</th>
+                        <th scope="row" class="center">기간</th>
+                        <th scope="row" class="center">수집채널</th>
+                        <th scope="row" class="center">기간</th>
+                    </tr>
+                <tbody>
+                    <tr>
+                        <td scope="row" class="center">{{ board.channel }}</td>
+                        <td scope="row" class="center">{{ board.periodStartA }}~{{ board.periodEndA }}</td>
+                        <td scope="row" class="center">{{ board.channel }}</td>
+                        <td scope="row" class="center">{{ board.periodStartA }}~{{ board.periodEndA }}</td>
+                    </tr>
+                </tbody>
+                </thead>
+            </table>
+            {% endif %}
+
+        </div>
+    </div>
+    <div class="wordcloud_title">>워드클라우드
+    </div>
+    <div class="wordcloud_container">
+        <a href={{ board.image }}>
+    <img class="wordcloud" src={{ board.image }}>
+        </a>
+    </div>
+    <table id="keyword_view_table" class="display nanumsquare" style="width:100%;" >
+    <div class="wordcloud_title">>연관어</div>
+
+    {% if board.analysis_type == "kca" %}
+    <thead>
+        <tr class="IBMPlexSansKR-Text">
+            <th rowspan="2">RANK</th>
+            <th colspan="2">{{ board.keywordA }}</th>
+            <th colspan="2" style="color:white; background-color: #00B890; border-right: 1px solid darkgray; border-left: 1px solid darkgray">공통</th>
+            <th colspan="2">{{ board.keywordB }}</th>
+
+
+        </tr>
+        <tr class="IBMPlexSansKR-Text">
+            <th>키워드</th>
+            <th>빈도</th>
+            <th style="background-color: #D6FFF6; border-left: 1px solid darkgray">키워드</th>
+            <th style="background-color: #D6FFF6; border-right: 1px solid darkgray">빈도</th>
+            <th>키워드</th>
+            <th>빈도</th>
+        </tr>
+
+    </thead>
+    <tbody style="color: black">
+    {% for num_count_df_record_A,num_count_df_record_B,num_count_df_record_AB in num_count_list %}
+        <tr>
+            <td>{{ forloop.counter}}</td>
+            <td>{{ num_count_df_record_A.keyword }}</td>
+            <td>{{ num_count_df_record_A.count }}</td>
+            <td style="color:black; background-color: #D6FFF6; border-left: 1px solid darkgray; border-right: 1px dashed darkgray">{{ num_count_df_record_AB.keyword }}</td>
+            <td style="color:black; background-color: #D6FFF6; border-right: 1px solid darkgray;">{{ num_count_df_record_AB.count }}</td>
+            <td>{{ num_count_df_record_B.keyword }}</td>
+            <td>{{ num_count_df_record_B.count }}</td>
+        </tr>
+    {% endfor %}
+    {% endif %}
+
+    {#    기간 분석 detail _view#}
+        {% if board.analysis_type == "pca" %}
+    <thead>
+        <tr class="IBMPlexSansKR-Text normal">
+            <th rowspan="2">RANK</th>
+            <th colspan="2">{{ board.periodStartA }}~{{ board.periodEndA }}</th>
+            <th colspan="2" style="color:white; background-color: #00B890">공통</th>
+            <th colspan="2">{{ board.periodStartB }}~{{ board.periodEndB }}</th>
+
+
+        </tr>
+        <tr class="IBMPlexSansKR-Text normal">
+            <th>키워드</th>
+            <th>빈도</th>
+            <th style="border-left:1px solid darkgray; border-right:1px dashed darkgray; background-color: #D6FFF6">키워드</th>
+            <th style="border-right:1px solid darkgray; background-color: #D6FFF6">빈도</th>
+            <th>키워드</th>
+            <th>빈도</th>
+        </tr>
+
+    </thead>
+    <tbody>
+    {% for num_count_df_record_A,num_count_df_record_B,num_count_df_record_AB in num_count_list %}
+        <tr>
+            <td>{{ forloop.counter}}</td>
+            <td>{{ num_count_df_record_A.keyword }}</td>
+            <td>{{ num_count_df_record_A.count }}</td>
+            <td style="border-left:1px solid darkgray; border-right:1px darkgray dashed; background-color: #D6FFF6">{{ num_count_df_record_AB.keyword }}</td>
+            <td style="border-right:1px solid darkgray; background-color: #D6FFF6">{{ num_count_df_record_AB.count }}</td>
+            <td>{{ num_count_df_record_B.keyword }}</td>
+            <td>{{ num_count_df_record_B.count }}</td>
+        </tr>
+    {% endfor %}
+    {% endif %}
+</table>
+{% endblock %}

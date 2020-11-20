@@ -1,0 +1,94 @@
+{#{% extends "landing/base.html" %}#}
+{#{%  load widget_tweaks %}#}
+{#{% block title%}#}
+{#    Datacast-contact#}
+{#{% endblock %}#}
+{#{% block content %}#}
+{#    {% load static %}#}
+{#    <script type="text/javascript" src="{%  static "landing/vendors/jquery/jquery-3.2.1.min.js" %}"></script>#}
+{#  <script type="text/javascript" src="{%  static "landing/vendors/bootstrap/bootstrap.bundle.min.js" %}"></script>#}
+{#  <script type="text/javascript" src="{%  static "landing/vendors/owl-carousel/owl.carousel.min.js" %}"></script>#}
+{#  <script type="text/javascript" src="{%  static "landing/js/jquery.ajaxchimp.min.js" %}"></script>#}
+{#  <script type="text/javascript" src="{%  static "landing/js/mail-script.js" %}"></script>#}
+{#  <script type="text/javascript" src="{%  static "landing/js/main.js" %}"></script>#}
+{#    <script type="text/javascript" src = "{% static 'landing/js/login.js' %}"></script>#}
+{##}
+{##}
+{##}
+{#<!--================ Hero sm Banner start =================-->#}
+{##}
+{#<!--================ Hero sm Banner end =================-->#}
+{##}
+{##}
+{#  <!-- ================ contact section start ================= -->#}
+{#  <section class="section-margin">#}
+{#    <div class="container">#}
+{#      <div class="d-none d-sm-block mb-5 pb-4">#}
+{#    <div id="map" style="height: 250px;"></div>#}
+{#              <div class="row">#}
+{##}
+{#<!-- ================ icon section start ================= -->#}
+{#            <div class="col-md-4 col-lg-5 mb-4 mb-md-0">#}
+{#              <div class="media contact-info">#}
+{#                <span class="contact-info__icon"><i class="ti-home"></i></span>#}
+{#                <div class="media-body">#}
+{#                  <h3>Seoul,Korea</h3>#}
+{#                  <p>23,Gangnam-daero 62-gil</p>#}
+{#                </div>#}
+{#              </div>#}
+{#              <div class="media contact-info">#}
+{#                <span class="contact-info__icon"><i class="ti-headphone"></i></span>#}
+{#                <div class="media-body">#}
+{#                  <h3><a href="tel:454545654">010 2442 6349</a></h3>#}
+{#                  <p>Mon to Fri 9am to 6pm</p>#}
+{#                </div>#}
+{#              </div>#}
+{#              <div class="media contact-info">#}
+{#                <span class="contact-info__icon"><i class="ti-email"></i></span>#}
+{#                <div class="media-body">#}
+{#                  <h3><a href="mailto:jykim@gamil.com">jykim@datacast.kr</a></h3>#}
+{#                  <p>Send us your query anytime!</p>#}
+{#                </div>#}
+{#              </div>#}
+{#            </div>#}
+{#<!-- ================ icon section end ================= -->#}
+{##}
+{#<!-- ================ login section start ================= -->#}
+{#            <div class="col-md-8 col-lg-4">#}
+{#                {% if form.errors %}#}
+{#                    <div class="alert alert-danger">#}
+{#                        <div class="font-weight-bold">Wrong !! Please correct the error(s) below.</div>#}
+{#                    </div>#}
+{#                {% endif %}#}
+{##}
+{#                <form action="." method="post" class="card pt-3">{% csrf_token %}#}
+{#                    <div class="form-group row">#}
+{#                        {{ form.username|add_label_class:"col-form-label col-sm-2 ml-3 font-weight-bold" }}#}
+{#                        <div class="col-sm-5">#}
+{#                            {{ form.username|add_class:"form-control"|attr:"autofocus" }}#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="form-group row">#}
+{#                        {{ form.password|add_label_class:"col-form-label col-sm-2 ml-3 font-weight-bold" }}#}
+{#                        <div class="col-sm-5">#}
+{#                            {{ form.password|ass_class:"form-control" }}#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class = "form-group">#}
+{#                        <div class="offset-sm-2 col-sm-5">#}
+{#                            <input type="submit" value="Log in " class="btn btn-info"/>#}
+{#                            <input type="hidden" name="next" value="{{ next }}"/>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </form>#}
+{#            </div>#}
+{#  <!-- ================ login section end ================= -->#}
+{##}
+{#      </div>#}
+{##}
+{#          <div id="map" style="height: 420px;"></div>#}
+{#      </div>#}
+{#    </div>#}
+{#  </section>#}
+{#	<!-- ================ contact section end ================= -->#}
+{#{% endblock %}#}
